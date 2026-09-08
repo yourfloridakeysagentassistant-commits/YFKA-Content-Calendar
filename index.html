@@ -292,7 +292,7 @@ async function savePosts(){
     return true;
   }catch(e){
     console.error('Storage error', e);
-    alert('Could not save, possibly because an attached photo/video pushed a row over size limits. Try a smaller file.');
+    alert('Could not save.\n\nError: ' + (e && e.message ? e.message : JSON.stringify(e)) + (e && e.hint ? ('\nHint: ' + e.hint) : ''));
     return false;
   }
 }
@@ -539,10 +539,4 @@ async function manualSave(){
   btn.textContent = 'Saving…';
   const ok = await savePosts();
   btn.textContent = ok ? 'Saved ✓' : 'Try again';
-  setTimeout(()=>{ btn.textContent = 'Save'; btn.disabled = false; }, 1500);
-}
-
-init();
-</script>
-</body>
-</html>
+  setTimeout(()=>{
